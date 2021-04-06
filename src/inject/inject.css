@@ -1,0 +1,35 @@
+/**
+ * Place your custom CSS styles here.
+ **/
+
+
+#my_root {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 3px 3px 5px 6px #ccc;
+  padding: 1%;
+  display: none;
+  font-size: 16pt;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+#my_root>* {
+  margin-bottom: 5px;
+}
+
+#my_root textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13pt;
+  font-weight: normal;
+}
+
+#my_root input {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13pt;
+  font-weight: normal;
+}
