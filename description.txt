@@ -4,6 +4,9 @@ what your changes will look like without having to change source, and reload the
 Simply press SHIFT + X to start the extension. You will see the current HTML element
 you are hovering over highlight in red. If you press ENTER a dialog will allow you to edit
 the HTML that currently exists in the element. (You can also click the element, but WARNING if you click a link,
-it will follow the link and ruin your progress!)
+it will follow the link and ruin your progress!).
+
+By default, pressing ENTER or clicking an element will allow you to edit the `textContent` property.
+Hold SHIFT while pressing ENTER or while clicking an element to edit its `innerHTML` property.
 
 Simply press SHIFT + X or ESCAPE to stop the extension and go back to the normal webpage viewing mode

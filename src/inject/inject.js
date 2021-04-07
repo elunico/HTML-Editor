@@ -1,4 +1,5 @@
 let inj_editeur_has_listener = false;
+let inj_shift_set = false;
 chrome.extension.sendMessage({}, function (response) {
 
 	// Create area for editing elements
@@ -20,6 +21,7 @@ chrome.extension.sendMessage({}, function (response) {
 			document.body.addEventListener('mousemove', mmove);
 			inj_editeur_has_listener = true;
 		}
+		inj_shift_set = false;
 	};
 	root.appendChild(cancelButton);
 	goButton.type = 'button';
@@ -27,13 +29,19 @@ chrome.extension.sendMessage({}, function (response) {
 	goButton.onclick = function (event) {
 		console.log(old);
 		if (old) {
-			old.textContent = mytext.value;
+			if (inj_shift_set) {
+				old.innerHTML = mytext.value;
+			} else {
+				old.textContent = mytext.value;
+			}
+			inj_shift_set = false;
 		}
 		root.style.display = 'none';
 		if (!inj_editeur_has_listener) {
 			document.body.addEventListener('mousemove', mmove);
 			inj_editeur_has_listener = true;
 		}
+		inj_shift_set = false;
 	}
 	root.appendChild(goButton);
 
@@ -41,7 +49,11 @@ chrome.extension.sendMessage({}, function (response) {
 	function openEditDialog() {
 		document.body.removeEventListener('mousemove', mmove);
 		inj_editeur_has_listener = false;
-		mytext.value = old.textContent;
+		if (inj_shift_set) {
+			mytext.value = old.innerHTML;
+		} else {
+			mytext.value = old.textContent;
+		}
 		root.style.display = 'flex';
 	}
 
@@ -66,13 +78,21 @@ chrome.extension.sendMessage({}, function (response) {
 
 		// open editing dialog
 		if (listening && old && event.key == "Enter") {
+			if (event.shiftKey) {
+				inj_shift_set = true;
+			}
 			openEditDialog();
+			event.preventDefault();
+			event.stopImmediatePropagation();
 		}
 	});
 
 	// handler for clicking on elements
 	document.body.addEventListener('mousedown', (event) => {
 		if (listening && old && inj_editeur_has_listener) {
+			if (event.shiftKey) {
+				inj_shift_set = true;
+			}
 			openEditDialog();
 			event.preventDefault();
 			event.stopImmediatePropagation();
